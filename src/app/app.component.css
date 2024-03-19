@@ -1,0 +1,9 @@
+@keyframes moveRight {
+  100% {
+    transform: translateX(calc(100vw - 100px)); /* Move to right side */
+  }
+}
+
+.move-right {
+  animation: moveRight 4s linear forwards; /* Animation properties */
+}
