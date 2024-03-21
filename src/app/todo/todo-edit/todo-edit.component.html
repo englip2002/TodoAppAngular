@@ -32,7 +32,7 @@
           Date</label>
         <span *ngIf="todoTaskEditForm.get('dueDate').hasError('required') && todoTaskEditForm.get('dueDate').touched"
           class="text-red-600">The field is required!</span>
-        <span *ngIf="!todoTaskEditForm.get('dueDate').hasError('required') && todoTaskEditForm.get('dueDate').hasError('invalidDate') && todoTaskCreateForm.get('dueDate').touched"
+        <span *ngIf="!todoTaskEditForm.get('dueDate').hasError('required') && todoTaskEditForm.get('dueDate').hasError('invalidDate') && todoTaskEditForm.get('dueDate').touched"
           class="text-red-600">Invalid date, please enter date after now!</span>
       </div>
       <div class="relative z-0 w-full mb-5 group">

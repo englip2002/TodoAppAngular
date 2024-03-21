@@ -8,11 +8,12 @@ import {
 import { TodoTaskService } from '../todo-task.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TodoTask } from '../todo-task.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-todo-edit',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './todo-edit.component.html',
   styleUrl: './todo-edit.component.css',
 })

@@ -1,48 +1,85 @@
-import { Injectable } from '@angular/core';
-import { User, UserManager, UserManagerSettings } from 'oidc-client';
-import { Constants } from './constant';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
-  private _userManager: UserManager;
-  private _user: User;
+export class AuthService implements OnInit {
+  public tokenInformation: TokenInfomation;
+
+  private tokenUrl = 'https://localhost:5001/connect/token';
+  private logoutUrl = 'https://localhost:5001/connect/endsession';
+  private clientId = 'todoClient';
+  private clientSecret = 'todoSecret';
   public loginChanged = new Subject<boolean>();
+  public isAuthenticated = false;
 
-  constructor() {
-    this._userManager = new UserManager(this.idpSettings);
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {}
+
+  authLogin(username: string, password: string) {
+    const body = new URLSearchParams();
+    body.set('grant_type', 'password');
+    body.set('username', username);
+    body.set('password', password);
+
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/x-www-form-urlencoded')
+      .set(
+        'Authorization',
+        'Basic ' + btoa(`${this.clientId}:${this.clientSecret}`)
+      );
+
+    return this.http
+      .post<TokenInfomation>(this.tokenUrl, body.toString(), { headers })
+      .subscribe(
+        (tokenInfo) => {
+          this.tokenInformation = tokenInfo;
+          this.isAuthenticated = true;
+          this.loginChanged.next(true);
+          console.log(this.tokenInformation);
+        },
+        (error) => {
+          console.log(error);
+          this.isAuthenticated = false;
+        }
+      );
   }
 
-  private get idpSettings(): UserManagerSettings {
-    return {
-      authority: Constants.idpAuthority,
-      client_id: Constants.clientId,
-      redirect_uri: `${Constants.clientRoot}/signin-callback`,
-      scope: 'openid profile TodoAppAPI',
-      response_type: 'code',
-      post_logout_redirect_uri: `${Constants.clientRoot}/signout-callback`,
-    };
+  authLogout() {
+    const returnUrl = 'http://localhost:4200/'; // Redirect back to Angular after logout
+    const logoutRedirectUrl = `${this.logoutUrl}?id_token_hint=&post_logout_redirect_uri=${returnUrl}&client_id=${this.clientId}`;
+    window.location.href = logoutRedirectUrl;
   }
+}
 
-  public login = () => {
-    return this._userManager.signinRedirect();
-  };
+export class AuthRequestModel {
+  public client_id: string;
+  public grant_type: string;
+  public username: string;
+  public password: string;
+  public scope: string;
 
-  public isAuthenticated = (): Promise<boolean> => {
-    return this._userManager.getUser()
-    .then(user => {
-      if(this._user !== user){
-        this.loginChanged.next(this.checkUser(user));
-      }
-      this._user = user;
-
-      return this.checkUser(user);
-    })
+  constructor(
+    client_id: string,
+    grant_type: string,
+    username: string,
+    password: string,
+    scope: string
+  ) {
+    this.client_id = client_id;
+    this.grant_type = grant_type;
+    this.username = username;
+    this.password = password;
+    this.scope = scope;
   }
+}
 
-  private checkUser = (user : User): boolean => {
-    return !!user && !user.expired;
-  }
+export class TokenInfomation {
+  public access_token: string;
+  public expires_in: number;
+  public token_type: string;
+  public scope: string;
 }

@@ -35,9 +35,9 @@ export class AppComponent implements OnInit {
     private messageHandleService: MessageHandleService,
     private authService: AuthService
   ) {
-    this.authService.loginChanged.subscribe((userAuthenticated) => {
-      this.userAuthenticated = userAuthenticated;
-    });
+    // this.authService.loginChanged.subscribe((userAuthenticated) => {
+    //   this.userAuthenticated = userAuthenticated;
+    // });
   }
 
   ngOnInit(): void {
@@ -50,8 +50,9 @@ export class AppComponent implements OnInit {
       this.alertExist = alertbool;
     });
 
-    this.authService.isAuthenticated().then((userAuthenticated) => {
-      this.userAuthenticated = userAuthenticated;
-    });
+    // //IdentityServer Authentication
+    // this.authService.isAuthenticated().then((userAuthenticated) => {
+    //   this.userAuthenticated = userAuthenticated;
+    // });
   }
 }

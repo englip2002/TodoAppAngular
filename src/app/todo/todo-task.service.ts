@@ -1,7 +1,7 @@
 import { TodoDataStorageServiceService } from '../Shared/todo-data-storage-service.service';
 import { Injectable, OnInit } from '@angular/core';
 import { TodoTask } from './todo-task.model';
-import { Subject } from 'rxjs';
+import { map, Subject } from 'rxjs';
 import { MessageHandleService } from '../Shared/message-handle.service';
 
 @Injectable({
@@ -34,6 +34,18 @@ export class TodoTaskService implements OnInit {
     return todo;
   }
 
+  // fetchTodoTasks() {
+  //   this.todoDataStorageServiceService
+  //     .getAllTodoTasks()
+  //     .subscribe((wait) => {
+  //       wait.subscribe(todoTask => {
+  //         const filteredTasks = todoTask.filter((task) => !task.isDeleted);
+  //         this.todoTaskList = filteredTasks;
+  //         this.todoTaskListChanged.next(this.todoTaskList);
+  //       })
+  //     });
+  // }
+
   fetchTodoTasks() {
     this.todoDataStorageServiceService
       .getAllTodoTasks()
@@ -43,6 +55,7 @@ export class TodoTaskService implements OnInit {
         this.todoTaskListChanged.next(this.todoTaskList);
       });
   }
+
 
   createTodoTask(
     title: string,

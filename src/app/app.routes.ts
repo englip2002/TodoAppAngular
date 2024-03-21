@@ -5,15 +5,19 @@ import { TodoItemComponent } from './todo/todo-list/todo-item/todo-item.componen
 import { TodoDetailsComponent } from './todo/todo-details/todo-details.component';
 import { TodoCreateComponent } from './todo/todo-create/todo-create.component';
 import { TodoEditComponent } from './todo/todo-edit/todo-edit.component';
+// import { SigninRedirectCallbackComponent } from './signin-redirect-callback/signin-redirect-callback.component';
+// import { SignoutRedirectCallbackComponent } from './signout-redirect-callback/signout-redirect-callback.component';
 
 export const routes: Routes = [
   { path: 'create', component: TodoCreateComponent },
+  // { path: 'signin-callback', component: SigninRedirectCallbackComponent },
+  // { path: 'signout-callback', component: SignoutRedirectCallbackComponent },
   {
     path: 'todo',
     component: TodoComponent,
     children: [
       { path: ':index', component: TodoDetailsComponent },
-      { path: ':index/edit', component: TodoEditComponent }
+      { path: ':index/edit', component: TodoEditComponent },
     ],
   },
 ];
