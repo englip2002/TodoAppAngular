@@ -1,8 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { User, UserManager, UserManagerSettings } from 'oidc-client';
 import { Subject } from 'rxjs';
-import { Constants } from './constant';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -15,14 +14,14 @@ export class AuthService {
 
   private get idpSettings(): UserManagerSettings {
     return {
-      authority: Constants.idpAuthority,
-      client_id: Constants.clientId,
-      redirect_uri: `${Constants.clientRoot}/signin-callback`,
+      authority: environment.idpAuthority,
+      client_id: environment.clientId,
+      redirect_uri: `${environment.clientRoot}/signin-callback`,
       scope: 'openid profile todoApi',
       response_type: 'code',
-      post_logout_redirect_uri: `${Constants.clientRoot}/signout-callback`,
+      post_logout_redirect_uri: `${environment.clientRoot}/signout-callback`,
       automaticSilentRenew: true,
-      silent_redirect_uri: `${Constants.clientRoot}/assets/silent-callback.html`
+      silent_redirect_uri: `${environment.clientRoot}/assets/silent-callback.html`
     };
   }
   constructor() {
@@ -30,7 +29,6 @@ export class AuthService {
     this._userManager.events.addAccessTokenExpired(_ => {
       this.loginChanged.next(false);
       console.log("Token expired");
-
     });
   }
 
@@ -44,8 +42,6 @@ export class AuthService {
         this.loginChanged.next(this.checkUser(user));
       }
       this._user = user;
-      console.log(this._user);
-
       return this.checkUser(user);
     });
   };

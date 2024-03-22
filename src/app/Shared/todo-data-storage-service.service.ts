@@ -4,6 +4,7 @@ import { TodoTask } from '../todo/todo-task.model';
 // import { AuthService } from './auth.service';
 import { from } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +16,7 @@ export class TodoDataStorageServiceService {
   ) {}
 
   async getAllTodoTasks() {
-    return await this.httpClient.get<TodoTask[]>(
-      'https://localhost:7097/api/TodoTasks',
-    );
+    return await this.httpClient.get<TodoTask[]>(environment.todoTaskApi);
   }
 
   async createTodoTask(
@@ -27,7 +26,7 @@ export class TodoDataStorageServiceService {
     category: string
   ) {
     return await this.httpClient.post<TodoTask>(
-      'https://localhost:7097/api/TodoTasks',
+      environment.todoTaskApi,
       new TodoTask(title, description, dueDate, category)
     );
   }
@@ -40,14 +39,14 @@ export class TodoDataStorageServiceService {
     id: number
   ) {
     return await this.httpClient.put<TodoTask>(
-      'https://localhost:7097/api/TodoTasks',
+      environment.todoTaskApi,
       new TodoTask(title, description, dueDate, category, id)
     );
   }
 
   async deleteTodoTask(id: number) {
     return await this.httpClient.delete<TodoTask>(
-      'https://localhost:7097/api/TodoTasks/' + id
+      environment.todoTaskApi + '/' + id
     );
   }
 }

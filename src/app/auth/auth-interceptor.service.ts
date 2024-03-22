@@ -1,16 +1,12 @@
 import {
   HttpEvent,
   HttpHandler,
-  HttpHandlerFn,
-  HttpHeaders,
   HttpInterceptor,
-  HttpInterceptorFn,
   HttpRequest,
 } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-import { Constants } from './constant';
 
 @Injectable({
   providedIn: 'root',

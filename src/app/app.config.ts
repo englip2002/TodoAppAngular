@@ -4,9 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import {
   provideHttpClient,
-  HttpInterceptor,
   HTTP_INTERCEPTORS,
-  withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';

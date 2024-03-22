@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { HeaderComponent } from './header/header.component';
 import { TodoComponent } from './todo/todo.component';
@@ -47,9 +47,8 @@ export class AppComponent implements OnInit {
       this.alertExist = alertbool;
     });
 
-    // //IdentityServer Authentication
+    //IdentityServer Authentication
     this.authService.loginChanged.subscribe((respond) => {
-      console.log(respond);
       this.isAuthenticated = respond;
     });
   }
