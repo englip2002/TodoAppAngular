@@ -38,7 +38,6 @@ export class TodoDetailsComponent implements OnInit, OnDestroy {
 
   onDelete() {
     this.todoTaskService.deleteTodoTask(this.todoTask.id);
-    this.todoTaskService.fetchTodoTasks();
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

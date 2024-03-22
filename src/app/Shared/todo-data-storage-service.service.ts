@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { TodoTask } from '../todo/todo-task.model';
 // import { AuthService } from './auth.service';
 import { from } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',

@@ -65,6 +65,8 @@ export class TodoTaskService implements OnInit {
             console.log(response);
             this.todoTaskListChanged.next(this.todoTaskList);
             this.sendSuccessMessage('Task created successfully!');
+            //get updated list
+            this.fetchTodoTasks();
             this.isLoading.next(false);
           },
           error: (error) => {
@@ -92,6 +94,8 @@ export class TodoTaskService implements OnInit {
             console.log(response);
             this.todoTaskListChanged.next(this.todoTaskList);
             this.sendSuccessMessage('Task updated successfully!');
+            //get updated list
+            this.fetchTodoTasks();
             this.isLoading.next(false);
           },
           error: (error) => {
@@ -103,23 +107,6 @@ export class TodoTaskService implements OnInit {
       });
   }
 
-  // deleteTodoTask(id: number) {
-  //   this.isLoading.next(true);
-  //   this.todoDataStorageServiceService.deleteTodoTask(id).subscribe({
-  //     next: (response) => {
-  //       console.log(response);
-  //       this.todoTaskListChanged.next(this.todoTaskList);
-  //       this.sendSuccessMessage('Task deleted successfully!');
-  //       this.isLoading.next(false);
-  //     },
-  //     error: (error) => {
-  //       console.log(error);
-  //       this.isLoading.next(false);
-  //       this.sendErrorMessage(error);
-  //     },
-  //   });
-  // }
-
   deleteTodoTask(id: number) {
     this.isLoading.next(true);
     this.todoDataStorageServiceService.deleteTodoTask(id).then((res) => {
@@ -128,6 +115,8 @@ export class TodoTaskService implements OnInit {
           console.log(response);
           this.todoTaskListChanged.next(this.todoTaskList);
           this.sendSuccessMessage('Task deleted successfully!');
+          //get updated list
+          this.fetchTodoTasks();
           this.isLoading.next(false);
         },
         error: (error) => {

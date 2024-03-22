@@ -62,11 +62,10 @@ export class TodoCreateComponent implements OnInit {
     const isoDate = new Date(dueDate).toISOString();
 
     this.todoTaskService.createTodoTask(title, description, isoDate, category);
-    this.todoTaskService.fetchTodoTasks();
-    this.router.navigate(['/todo']);
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   onCancel() {
-    this.router.navigate(['/todo']);
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }

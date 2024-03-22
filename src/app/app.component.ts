@@ -8,7 +8,7 @@ import { TodoTaskService } from './todo/todo-task.service';
 import { MessageHandleService } from './Shared/message-handle.service';
 import { AlertComponent } from './Shared/alert/alert.component';
 import { CommonModule } from '@angular/common';
-import { AuthService } from './Shared/auth.service';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -47,12 +47,10 @@ export class AppComponent implements OnInit {
       this.alertExist = alertbool;
     });
 
-    // //IdentityServer AuthenticationS
+    // //IdentityServer Authentication
     this.authService.loginChanged.subscribe((respond) => {
       console.log(respond);
       this.isAuthenticated = respond;
     });
-
-    this.todoService.fetchTodoTasks();
   }
 }

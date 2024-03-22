@@ -25,8 +25,4 @@ export class TodoListComponent implements OnInit {
     });
     this.todoService.fetchTodoTasks();
   }
-
-  onCreate(){
-    this.router.navigate['create'];
-  }
 }

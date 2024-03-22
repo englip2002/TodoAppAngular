@@ -30,6 +30,7 @@ export class TodoEditComponent {
 
   ngOnInit(): void {
     this.taskIndexToUpdate = +this.route.snapshot.params['index'];
+
     this.taskToUpdate = this.todoTaskService.getTodoByIndex(
       this.taskIndexToUpdate
     );
@@ -61,9 +62,14 @@ export class TodoEditComponent {
     const category = this.todoTaskEditForm.value.category;
     const isoDate = new Date(dueDate).toISOString();
 
-    this.todoTaskService.updateTodoTask(title, description, isoDate, category, id);
-    this.todoTaskService.fetchTodoTasks();
-    this.router.navigate(['../../'], { relativeTo: this.route });
+    this.todoTaskService.updateTodoTask(
+      title,
+      description,
+      isoDate,
+      category,
+      id
+    );
+    this.router.navigate(['/todo']);
   }
 
   onCancel() {
