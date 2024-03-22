@@ -16,16 +16,12 @@
 
   <div
     class=" w-screen min-h-96 m-6 md:m-20 p-11 bg-white rounded-lg border-2 border-gray-100 shadow-lg shadow-neutral-400">
-    @if (isLoading) {
-      <div>
-        <app-loading-spinner></app-loading-spinner>
-      </div>
-    }
-    @else {
-      <div>
-        <router-outlet></router-outlet>
-      </div>
-    }
+    <!-- <div *ngIf="isLoading">
+      <app-loading-spinner></app-loading-spinner>
+    </div> -->
+    <div>
+      <router-outlet></router-outlet>
+    </div>
   </div>
 
 </div>

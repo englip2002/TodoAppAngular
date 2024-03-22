@@ -14,41 +14,39 @@ export class TodoDataStorageServiceService {
     private _authService: AuthService
   ) {}
 
-  public getAllTodoTasks() {
-    // const token = this._authService.getAccessToken();
-    // const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.httpClient.get<TodoTask[]>('https://localhost:7097/api/TodoTasks', {
-      // headers: headers,
-    });
-  };
+  async getAllTodoTasks() {
+    return await this.httpClient.get<TodoTask[]>(
+      'https://localhost:7097/api/TodoTasks',
+    );
+  }
 
-  createTodoTask(
+  async createTodoTask(
     title: string,
     description: string,
     dueDate: string,
     category: string
   ) {
-    return this.httpClient.post<TodoTask>(
+    return await this.httpClient.post<TodoTask>(
       'https://localhost:7097/api/TodoTasks',
       new TodoTask(title, description, dueDate, category)
     );
   }
 
-  updateTodoTask(
+  async updateTodoTask(
     title: string,
     description: string,
     dueDate: string,
     category: string,
     id: number
   ) {
-    return this.httpClient.put<TodoTask>(
+    return await this.httpClient.put<TodoTask>(
       'https://localhost:7097/api/TodoTasks',
       new TodoTask(title, description, dueDate, category, id)
     );
   }
 
-  deleteTodoTask(id: number) {
-    return this.httpClient.delete<TodoTask>(
+  async deleteTodoTask(id: number) {
+    return await this.httpClient.delete<TodoTask>(
       'https://localhost:7097/api/TodoTasks/' + id
     );
   }

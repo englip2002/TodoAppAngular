@@ -13,9 +13,7 @@ import { TodoTaskService } from './todo-task.service';
 })
 export class TodoComponent implements OnInit {
   constructor(private todoTaskService: TodoTaskService) {
-    // this.todoTaskService.fetchTodoTasks();
   }
   ngOnInit(): void {
-
   }
 }

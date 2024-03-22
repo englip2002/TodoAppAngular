@@ -18,10 +18,12 @@ export class TodoListComponent implements OnInit {
   constructor(private todoService: TodoTaskService, private router: Router) {}
 
   ngOnInit(): void {
-    this.todoTaskList = this.todoService.getTodoList();
+    // this.todoService.fetchTodoTasks();
+    // this.todoTaskList = this.todoService.getTodoList();
     this.todoService.todoTaskListChanged.subscribe((todoList) => {
       this.todoTaskList = todoList;
     });
+    this.todoService.fetchTodoTasks();
   }
 
   onCreate(){

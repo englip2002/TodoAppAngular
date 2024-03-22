@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   constructor(
     private todoService: TodoTaskService,
     private messageHandleService: MessageHandleService,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
   }
 
@@ -47,14 +47,12 @@ export class AppComponent implements OnInit {
       this.alertExist = alertbool;
     });
 
-    // //IdentityServer Authentication
-    this.authService.loginChanged.subscribe((respond) => {
-      this.isAuthenticated = respond;
-    });
-
+    // //IdentityServer AuthenticationS
     this.authService.loginChanged.subscribe((respond) => {
       console.log(respond);
       this.isAuthenticated = respond;
     });
+
+    this.todoService.fetchTodoTasks();
   }
 }

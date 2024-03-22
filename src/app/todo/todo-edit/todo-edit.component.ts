@@ -62,7 +62,8 @@ export class TodoEditComponent {
     const isoDate = new Date(dueDate).toISOString();
 
     this.todoTaskService.updateTodoTask(title, description, isoDate, category, id);
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.todoTaskService.fetchTodoTasks();
+    this.router.navigate(['../../'], { relativeTo: this.route });
   }
 
   onCancel() {
