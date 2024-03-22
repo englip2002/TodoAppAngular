@@ -47,15 +47,20 @@ export class TodoTaskService implements OnInit {
   // }
 
   fetchTodoTasks() {
-    this.todoDataStorageServiceService
-      .getAllTodoTasks()
-      .subscribe((todoTasks) => {
+    this.isLoading.next(true);
+    this.todoDataStorageServiceService.getAllTodoTasks().subscribe({
+      next: (todoTasks) => {
         const filteredTasks = todoTasks.filter((task) => !task.isDeleted);
         this.todoTaskList = filteredTasks;
         this.todoTaskListChanged.next(this.todoTaskList);
-      });
+        this.isLoading.next(false);
+      },
+      error: (error) => {
+        console.log(error);
+        this.isLoading.next(false);
+      },
+    });
   }
-
 
   createTodoTask(
     title: string,
@@ -69,7 +74,6 @@ export class TodoTaskService implements OnInit {
       .subscribe({
         next: (response) => {
           console.log(response);
-          this.fetchTodoTasks();
           this.todoTaskListChanged.next(this.todoTaskList);
           this.sendSuccessMessage('Task created successfully!');
           this.isLoading.next(false);
@@ -95,7 +99,6 @@ export class TodoTaskService implements OnInit {
       .subscribe({
         next: (response) => {
           console.log(response);
-          this.fetchTodoTasks();
           this.todoTaskListChanged.next(this.todoTaskList);
           this.sendSuccessMessage('Task updated successfully!');
           this.isLoading.next(false);
@@ -113,7 +116,6 @@ export class TodoTaskService implements OnInit {
     this.todoDataStorageServiceService.deleteTodoTask(id).subscribe({
       next: (response) => {
         console.log(response);
-        this.fetchTodoTasks();
         this.todoTaskListChanged.next(this.todoTaskList);
         this.sendSuccessMessage('Task deleted successfully!');
         this.isLoading.next(false);

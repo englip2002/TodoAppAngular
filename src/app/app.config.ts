@@ -6,17 +6,21 @@ import {
   provideHttpClient,
   HttpInterceptor,
   HTTP_INTERCEPTORS,
+  withInterceptors,
+  withInterceptorsFromDi,
 } from '@angular/common/http';
+import { AuthInterceptorService } from './Shared/auth-interceptor.service';
 // import { AuthInterceptorService } from './Shared/auth-interceptor.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideHttpClient(),
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthInterceptorService,
-    //   multi: true,
-    // },
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
   ],
 };

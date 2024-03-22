@@ -1,85 +1,93 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
+import { User, UserManager, UserManagerSettings } from 'oidc-client';
 import { Subject } from 'rxjs';
+import { Constants } from './constant';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnInit {
-  public tokenInformation: TokenInfomation;
+export class AuthService {
+  private _userManager: UserManager;
+  private _user: User;
+  private _loginChangedSubject = new Subject<boolean>();
+  public loginChanged = this._loginChangedSubject.asObservable();
 
-  private tokenUrl = 'https://localhost:5001/connect/token';
-  private logoutUrl = 'https://localhost:5001/connect/endsession';
-  private clientId = 'todoClient';
-  private clientSecret = 'todoSecret';
-  public loginChanged = new Subject<boolean>();
-  public isAuthenticated = false;
+  private get idpSettings(): UserManagerSettings {
+    return {
+      authority: Constants.idpAuthority,
+      client_id: Constants.clientId,
+      redirect_uri: `${Constants.clientRoot}/signin-callback`,
+      scope: 'openid profile todoApi',
+      response_type: 'code',
+      post_logout_redirect_uri: `${Constants.clientRoot}/signout-callback`,
+      automaticSilentRenew: true,
+      silent_redirect_uri: `${Constants.clientRoot}/assets/silent-callback.html`
+    };
+  }
+  constructor() {
+    this._userManager = new UserManager(this.idpSettings);
+    this._userManager.events.addAccessTokenExpired(_ => {
+      this._loginChangedSubject.next(false);
+      console.log("Token expired");
 
-  constructor(private http: HttpClient) {}
-
-  ngOnInit(): void {}
-
-  authLogin(username: string, password: string) {
-    const body = new URLSearchParams();
-    body.set('grant_type', 'password');
-    body.set('username', username);
-    body.set('password', password);
-
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/x-www-form-urlencoded')
-      .set(
-        'Authorization',
-        'Basic ' + btoa(`${this.clientId}:${this.clientSecret}`)
-      );
-
-    return this.http
-      .post<TokenInfomation>(this.tokenUrl, body.toString(), { headers })
-      .subscribe(
-        (tokenInfo) => {
-          this.tokenInformation = tokenInfo;
-          this.isAuthenticated = true;
-          this.loginChanged.next(true);
-          console.log(this.tokenInformation);
-        },
-        (error) => {
-          console.log(error);
-          this.isAuthenticated = false;
-        }
-      );
+    });
   }
 
-  authLogout() {
-    const returnUrl = 'http://localhost:4200/'; // Redirect back to Angular after logout
-    const logoutRedirectUrl = `${this.logoutUrl}?id_token_hint=&post_logout_redirect_uri=${returnUrl}&client_id=${this.clientId}`;
-    window.location.href = logoutRedirectUrl;
+  public login = () => {
+    return this._userManager.signinRedirect();
+  };
+
+  public isAuthenticated = (): Promise<boolean> => {
+    return this._userManager.getUser().then((user) => {
+      if (this._user !== user) {
+        this._loginChangedSubject.next(this.checkUser(user));
+      }
+      this._user = user;
+      console.log(this._user);
+
+      return this.checkUser(user);
+    });
+  };
+
+  private checkUser = (user: User): boolean => {
+    return !!user && !user.expired;
+  };
+
+  public finishLogin = (): Promise<User> => {
+    return this._userManager.signinRedirectCallback().then((user) => {
+      this._user = user;
+      this._loginChangedSubject.next(this.checkUser(user));
+      return user;
+    });
+  };
+
+  public logout = () => {
+    this._userManager.signoutRedirect();
+  };
+
+  public finishLogout = () => {
+    this._user = null;
+    this._loginChangedSubject.next(false);
+    return this._userManager.signoutRedirectCallback();
+  };
+
+  // public getAccessToken = (): Promise<string> => {
+  //   return this._userManager.getUser()
+  //     .then(user => {
+  //        return !!user && !user.expired ? user.access_token : null;
+  //   })
+  // }
+
+  public getAccessToken() {
+    if (this._user.expires_at < Date.now()){
+      return this._user.access_token;
+    }
+    else{
+      console.log("Token Expired");
+      return null;
+    }
   }
-}
 
-export class AuthRequestModel {
-  public client_id: string;
-  public grant_type: string;
-  public username: string;
-  public password: string;
-  public scope: string;
 
-  constructor(
-    client_id: string,
-    grant_type: string,
-    username: string,
-    password: string,
-    scope: string
-  ) {
-    this.client_id = client_id;
-    this.grant_type = grant_type;
-    this.username = username;
-    this.password = password;
-    this.scope = scope;
-  }
-}
-
-export class TokenInfomation {
-  public access_token: string;
-  public expires_in: number;
-  public token_type: string;
-  public scope: string;
 }

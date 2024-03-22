@@ -11,30 +11,16 @@ import { AuthService } from './auth.service';
 export class TodoDataStorageServiceService {
   constructor(
     private httpClient: HttpClient,
-    private authService: AuthService
+    private _authService: AuthService
   ) {}
 
-  getAllTodoTasks() {
-    // const token = this.authService.getAccessToken();
-    const token = this.authService.tokenInformation.access_token;
-    const header = new HttpHeaders().set('authorization', `Bearer ${token}`);
-
-    // console.log(header);
-    return this.httpClient.get<TodoTask[]>(
-      'https://localhost:7097/api/TodoTasks',
-      { headers: header }
-    );
-  }
-
-  // getAllTodoTasks = () => {
-  //   return from(
-  //     this.authService.getAccessToken()
-  //     .then(token => {
-  //       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  //       return this.httpClient.get<TodoTask[]>('https://localhost:7097/api/TodoTasks', { headers: headers });
-  //     })
-  //   );
-  // }
+  public getAllTodoTasks() {
+    // const token = this._authService.getAccessToken();
+    // const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<TodoTask[]>('https://localhost:7097/api/TodoTasks', {
+      // headers: headers,
+    });
+  };
 
   createTodoTask(
     title: string,

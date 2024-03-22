@@ -1,19 +1,31 @@
 <div>
   <app-header></app-header>
 </div>
-@if (alertExist) {
-  <div class="fixed top-20 right-5">
-    <app-alert></app-alert>
-  </div>
-}
+<div class="fixed top-20 right-5" *ngIf="alertExist">
+  <app-alert></app-alert>
+</div>
 <div class="flex items-center justify-center min-h-screen bg-yellow-50">
-  @if (isLoading) {
-  <app-loading-spinner></app-loading-spinner>
-  }
-  @else {
-  <div
+
+
+
+  <!-- <div *ngIf="!isLoading && isAuthenticated"
     class=" w-screen min-h-96 m-6 md:m-20 p-11 bg-white rounded-lg border-2 border-gray-100 shadow-lg shadow-neutral-400">
     <router-outlet></router-outlet>
+  </div> -->
+  <!-- *ngIf="isLoading" -->
+
+  <div
+    class=" w-screen min-h-96 m-6 md:m-20 p-11 bg-white rounded-lg border-2 border-gray-100 shadow-lg shadow-neutral-400">
+    @if (isLoading) {
+      <div>
+        <app-loading-spinner></app-loading-spinner>
+      </div>
+    }
+    @else {
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+    }
   </div>
-  }
+
 </div>

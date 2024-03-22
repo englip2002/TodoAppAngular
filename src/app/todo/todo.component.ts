@@ -12,8 +12,10 @@ import { TodoTaskService } from './todo-task.service';
   styleUrl: './todo.component.css',
 })
 export class TodoComponent implements OnInit {
-  constructor(private todoTaskService: TodoTaskService) {}
+  constructor(private todoTaskService: TodoTaskService) {
+    // this.todoTaskService.fetchTodoTasks();
+  }
   ngOnInit(): void {
-    this.todoTaskService.fetchTodoTasks();
+
   }
 }

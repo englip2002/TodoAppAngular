@@ -28,16 +28,13 @@ import { AuthService } from './Shared/auth.service';
 export class AppComponent implements OnInit {
   isLoading: boolean;
   alertExist: boolean;
-  public userAuthenticated = false;
+  isAuthenticated = false;
 
   constructor(
     private todoService: TodoTaskService,
     private messageHandleService: MessageHandleService,
     private authService: AuthService
   ) {
-    // this.authService.loginChanged.subscribe((userAuthenticated) => {
-    //   this.userAuthenticated = userAuthenticated;
-    // });
   }
 
   ngOnInit(): void {
@@ -51,8 +48,13 @@ export class AppComponent implements OnInit {
     });
 
     // //IdentityServer Authentication
-    // this.authService.isAuthenticated().then((userAuthenticated) => {
-    //   this.userAuthenticated = userAuthenticated;
-    // });
+    this.authService.loginChanged.subscribe((respond) => {
+      this.isAuthenticated = respond;
+    });
+
+    this.authService.loginChanged.subscribe((respond) => {
+      console.log(respond);
+      this.isAuthenticated = respond;
+    });
   }
 }

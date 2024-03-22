@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoTask } from '../todo-task.model';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { TodoTaskService } from '../todo-task.service';
 
@@ -15,12 +15,16 @@ import { TodoTaskService } from '../todo-task.service';
 export class TodoListComponent implements OnInit {
   todoTaskList: TodoTask[];
 
-  constructor(private todoService: TodoTaskService) {}
+  constructor(private todoService: TodoTaskService, private router: Router) {}
 
   ngOnInit(): void {
     this.todoTaskList = this.todoService.getTodoList();
     this.todoService.todoTaskListChanged.subscribe((todoList) => {
       this.todoTaskList = todoList;
     });
+  }
+
+  onCreate(){
+    this.router.navigate['create'];
   }
 }

@@ -21,12 +21,12 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogin() {
-    // this.authService.login();
-    this.authService.authLogin('Mick','MickPassword');
+    this.authService.login();
+    // this.authService.authLogin('Mick','MickPassword');
   }
 
   onLogout() {
-    // this.authService.logout();
-    this.authService.authLogout();
+    this.authService.logout();
+    // this.authService.authLogout();
   }
 }

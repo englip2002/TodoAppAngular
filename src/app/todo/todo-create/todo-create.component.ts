@@ -47,7 +47,8 @@ export class TodoCreateComponent implements OnInit {
   }
 
   private validateDate(control: FormControl): { [s: string]: boolean } {
-    if (control.value < Date.now) {
+    const inputValue = new Date(control.value).getTime();
+    if (inputValue < Date.now()) {
       return { invalidDate: true };
     }
     return null;
@@ -61,10 +62,11 @@ export class TodoCreateComponent implements OnInit {
     const isoDate = new Date(dueDate).toISOString();
 
     this.todoTaskService.createTodoTask(title, description, isoDate, category);
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.todoTaskService.fetchTodoTasks();
+    this.router.navigate(['/todo']);
   }
 
   onCancel() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['/todo']);
   }
 }
