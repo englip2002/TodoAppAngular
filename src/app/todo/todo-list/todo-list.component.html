@@ -2,12 +2,12 @@
   <h2 class="text-3xl mb-4">Todo Tasks:</h2>
 </div>
 <div
-  class="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white md:w-3/4">
+  class="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white md:w-4/5">
   @for (todoTask of todoTaskList; track $index) {
   <app-todo-item [todoTask]="todoTask" [index]="$index"></app-todo-item>
   }
 </div>
-<div class="mt-2 md:w-3/4">
+<div class="mt-2 md:w-4/5">
   <button type="button" routerLink="/todo/create"
     class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full mt-2 md:mt-0 md:w-full px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Create</button>
 </div>
