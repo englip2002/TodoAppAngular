@@ -7,3 +7,15 @@
 .move-right {
   animation: moveRight 4s linear forwards; /* Animation properties */
 }
+
+.bodyBackground {
+  position: fixed;
+  top: -100vh;
+  left: -100vw;
+  height: 200vh;
+  width: 200vw;
+  z-index: -10;
+  opacity: 0.5;
+  background-image: url("../assets/background.jpg");
+  background-repeat: repeat;
+}

@@ -17,7 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './todo-create.component.css',
 })
 export class TodoCreateComponent implements OnInit {
-  todoTaskCreateForm: FormGroup;
+  public todoTaskCreateForm: FormGroup;
 
   constructor(
     private todoTaskService: TodoTaskService,
@@ -62,10 +62,10 @@ export class TodoCreateComponent implements OnInit {
     const isoDate = new Date(dueDate).toISOString();
 
     this.todoTaskService.createTodoTask(title, description, isoDate, category);
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   onCancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

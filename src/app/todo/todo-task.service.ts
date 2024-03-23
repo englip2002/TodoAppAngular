@@ -1,16 +1,17 @@
-import { TodoDataStorageServiceService } from '../Shared/todo-data-storage-service.service';
+import { TodoDataStorageServiceService } from '../Shared/Service/todo-data-storage-service.service';
 import { Injectable, OnInit } from '@angular/core';
 import { TodoTask } from './todo-task.model';
 import { Subject } from 'rxjs';
-import { MessageHandleService } from '../Shared/message-handle.service';
+import { MessageHandleService } from '../Shared/Service/message-handle.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoTaskService implements OnInit {
   private todoTaskList: TodoTask[];
-  public todoTaskListChanged = new Subject<TodoTask[]>();
+  public todoTaskListSubject = new Subject<TodoTask[]>();
   public isLoading = new Subject<boolean>();
+  public deleteClickedSubject = new Subject<boolean>();
 
   constructor(
     private todoDataStorageServiceService: TodoDataStorageServiceService,
@@ -39,7 +40,7 @@ export class TodoTaskService implements OnInit {
       res.subscribe({
         next: (data) => {
           this.todoTaskList = data.filter((x) => x.isDeleted == false);
-          this.todoTaskListChanged.next(this.todoTaskList);
+          this.todoTaskListSubject.next(this.todoTaskList);
         },
         error: (error) => {
           console.log(error);
@@ -68,7 +69,7 @@ export class TodoTaskService implements OnInit {
         res.subscribe({
           next: (response) => {
             console.log(response);
-            this.todoTaskListChanged.next(this.todoTaskList);
+            this.todoTaskListSubject.next(this.todoTaskList);
             this.sendSuccessMessage('Task created successfully!');
             //get updated list
             this.fetchTodoTasks();
@@ -97,7 +98,7 @@ export class TodoTaskService implements OnInit {
         res.subscribe({
           next: (response) => {
             console.log(response);
-            this.todoTaskListChanged.next(this.todoTaskList);
+            this.todoTaskListSubject.next(this.todoTaskList);
             this.sendSuccessMessage('Task updated successfully!');
             //get updated list
             this.fetchTodoTasks();
@@ -118,7 +119,7 @@ export class TodoTaskService implements OnInit {
       res.subscribe({
         next: (response) => {
           console.log(response);
-          this.todoTaskListChanged.next(this.todoTaskList);
+          this.todoTaskListSubject.next(this.todoTaskList);
           this.sendSuccessMessage('Task deleted successfully!');
           //get updated list
           this.fetchTodoTasks();

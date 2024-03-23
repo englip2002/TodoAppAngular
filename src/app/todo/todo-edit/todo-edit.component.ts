@@ -1,3 +1,4 @@
+import { Utility } from './../../Shared/Utility/Utility';
 import { Component } from '@angular/core';
 import {
   FormControl,
@@ -43,7 +44,7 @@ export class TodoEditComponent {
       description: new FormControl(this.taskToUpdate.description, [
         Validators.required,
       ]),
-      dueDate: new FormControl(this.taskToUpdate.dueDate.slice(0, 16), [
+      dueDate: new FormControl(Utility.getLocalDateISO(this.taskToUpdate.dueDate), [
         Validators.required,
         Validators.maxLength(2000),
       ]),

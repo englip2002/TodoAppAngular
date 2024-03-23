@@ -1,12 +1,13 @@
 <div>
   <app-header></app-header>
 </div>
+<div class="bodyBackground" #bgImage></div>
 <div class="fixed top-20 right-5" *ngIf="alertExist">
   <app-alert></app-alert>
 </div>
-<div class="flex items-center justify-center min-h-screen bg-yellow-50">
+<div class="flex items-center justify-center min-h-screen bg-transparent">
   <div
-    class=" w-screen min-h-96 m-6 md:m-20 p-11 bg-white rounded-lg border-2 border-gray-100 shadow-lg shadow-neutral-400">
+    class=" w-screen min-h-[50vh] m-6 md:m-20 p-11 bg-white rounded-lg border-2 border-gray-100 shadow-lg shadow-neutral-400">
     <div *ngIf="isLoading">
       <app-loading-spinner></app-loading-spinner>
     </div>

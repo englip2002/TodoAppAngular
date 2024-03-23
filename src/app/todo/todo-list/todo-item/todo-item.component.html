@@ -1,4 +1,11 @@
 <a [routerLink]="[index]" [routerLinkActive]="['text-blue-700', 'ring-blue-700', 'ring-2', 'outline-none']"
-  class="block w-full text-lg rounded-md px-4 py-2 border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700  dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white">
-  {{todoTask.title}}
+  class="w-full text-lg rounded-md px-4 py-2 border-b border-gray-200 cursor-pointer hover:bg-gray-100 hover:text-blue-700 dark:border-gray-600 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-500 dark:focus:text-white flex items-center">
+
+  <span class="flex-1">{{todoTask.title}}</span>
+
+  <div
+    [ngClass]="{'from-yellow-500 to-orange-400': category == 'Due','from-pink-400 to-red-600': category == 'Expired', 'from-green-400 to-blue-600': category == 'Active' }"
+    class="text-white bg-gradient-to-br hover:bg-gradient-to-bl focus:ring-4 focus:outline-none font-medium rounded-3xl text-xs py-1 px-2 text-center me-2 mb-2 w-20">
+    {{category}}
+  </div>
 </a>

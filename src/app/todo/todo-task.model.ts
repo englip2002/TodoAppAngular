@@ -5,8 +5,8 @@ export class TodoTask {
   public dueDate: string;
   public category: string;
   public isDeleted?: boolean;
-  public created?: Date;
-  public updated?: Date;
+  public created?: string;
+  public updated?: string;
 
   constructor(
     title: string,
@@ -15,8 +15,8 @@ export class TodoTask {
     category: string,
     id?: number,
     isDeleted?: boolean,
-    created?: Date,
-    updated?: Date
+    created?: string,
+    updated?: string
   ) {
     this.id = id;
     this.title = title;

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TodoTask } from '../todo-task.model';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { TodoTaskService } from '../todo-task.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo-list',
@@ -12,17 +13,21 @@ import { TodoTaskService } from '../todo-task.service';
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.css',
 })
-export class TodoListComponent implements OnInit {
-  todoTaskList: TodoTask[];
+export class TodoListComponent implements OnInit, OnDestroy {
+  public todoTaskList: TodoTask[];
+  private todoTaskListSubscription: Subscription;
 
-  constructor(private todoService: TodoTaskService, private router: Router) {}
+  constructor(private todoTaskService: TodoTaskService) {}
 
   ngOnInit(): void {
-    // this.todoService.fetchTodoTasks();
-    // this.todoTaskList = this.todoService.getTodoList();
-    this.todoService.todoTaskListChanged.subscribe((todoList) => {
-      this.todoTaskList = todoList;
-    });
-    this.todoService.fetchTodoTasks();
+    this.todoTaskListSubscription =
+      this.todoTaskService.todoTaskListSubject.subscribe((todoList) => {
+        this.todoTaskList = todoList;
+      });
+    this.todoTaskService.fetchTodoTasks();
+  }
+
+  ngOnDestroy(): void {
+    this.todoTaskListSubscription.unsubscribe;
   }
 }
