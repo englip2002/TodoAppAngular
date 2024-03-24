@@ -82,9 +82,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     setInterval(() => {
       // Check if bgImage is defined
       if (this.bgImage && window.innerWidth > 768) {
-        this.bgImage.nativeElement.style.transform = `translateX(${xOffset}px) translateY(${yOffset}px)`;
         xOffset += 1;
         yOffset += 1;
+        // Calculate transform values based on xOffset and yOffset
+        const transformValue = `translateX(${xOffset}px) translateY(${yOffset}px)`;
+        this.bgImage.nativeElement.style.transform = transformValue;
         if (xOffset >= 1000) {
           xOffset = 0;
         }
