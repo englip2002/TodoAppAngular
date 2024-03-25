@@ -32,6 +32,6 @@ export class Utility {
   public static getFormattedLocalDate(isoDate: string) {
     const date = new Date(isoDate);
     const formattedDate = date.toDateString() + ' | ' + date.toTimeString();
-    return date.toDateString() + ' | ' + date.toTimeString();
+    return formattedDate;
   }
 }

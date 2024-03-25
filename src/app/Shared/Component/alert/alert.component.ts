@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MessageHandleService } from '../../Service/message-handle.service';
 import { CommonModule } from '@angular/common';
 

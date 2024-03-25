@@ -1,18 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TodoTask } from '../../todo/todo-task.model';
-// import { AuthService } from './auth.service';
-import { from } from 'rxjs';
-import { AuthService } from '../../auth/auth.service';
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TodoDataStorageServiceService {
-  constructor(
-    private httpClient: HttpClient,
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
   async getAllTodoTasks() {
     return await this.httpClient.get<TodoTask[]>(environment.todoTaskApi);

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TodoTask } from '../todo-task.model';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { TodoTaskService } from '../todo-task.service';
 import { Subscription } from 'rxjs';

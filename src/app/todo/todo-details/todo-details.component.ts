@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TodoTask } from '../todo-task.model';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { TodoTaskService } from '../todo-task.service';
 import { Utility } from '../../Shared/Utility/Utility';
 import { TodoDeleteModalComponent } from './todo-delete-modal/todo-delete-modal.component';
