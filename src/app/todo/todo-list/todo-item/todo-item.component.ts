@@ -22,7 +22,8 @@ export class TodoItemComponent implements OnInit {
 
     if (dueDate < Date.now()) {
       this.category = 'Expired';
-    } else if (dueDate - 1 * 60 * 60 * 1000 < Date.now()) {
+      //Category is due when is within one day
+    } else if (dueDate - 24 * 60 * 60 * 1000 < Date.now()) {
       this.category = 'Due';
     } else {
       this.category = 'Active';
