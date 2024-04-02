@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { User, UserManager, UserManagerSettings } from 'oidc-client';
 import { Subject } from 'rxjs';
 import { environment } from '../../environments/environment.development';

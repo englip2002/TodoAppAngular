@@ -33,6 +33,7 @@ export class TodoDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSubscription = this.route.params.subscribe((params: Params) => {
       this.taskIndex = params['index'];
+
       this.todoTask = this.todoTaskService.getTodoByIndex(this.taskIndex);
 
       this.formattedDueDate = Utility.getFormattedLocalDate(
@@ -47,9 +48,10 @@ export class TodoDetailsComponent implements OnInit, OnDestroy {
         this.todoTask.updated
       );
 
-      this.deleteSubscription = this.todoTaskService.deleteClickedSubject.subscribe((res) => {
-        this.deleteClicked = res;
-      });
+      this.deleteSubscription =
+        this.todoTaskService.deleteClickedSubject.subscribe((res) => {
+          this.deleteClicked = res;
+        });
     });
   }
 

@@ -12,6 +12,7 @@ export class Utility {
     const originalDate = new Date(
       Date.UTC(year, month, day, hours, minutes, seconds)
     );
+    
     const formattedDate = `${originalDate.getFullYear()}-${(
       originalDate.getMonth() + 1
     )
