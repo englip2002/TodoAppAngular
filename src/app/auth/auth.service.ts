@@ -21,14 +21,15 @@ export class AuthService {
       response_type: 'code',
       post_logout_redirect_uri: `${environment.clientRoot}/signout-callback`,
       automaticSilentRenew: true,
-      silent_redirect_uri: `${environment.clientRoot}/assets/silent-callback.html`
+      silent_redirect_uri: `${environment.clientRoot}/assets/silent-callback.html`,
     };
   }
+
   constructor() {
     this._userManager = new UserManager(this.idpSettings);
-    this._userManager.events.addAccessTokenExpired(_ => {
+    this._userManager.events.addAccessTokenExpired((_) => {
       this.loginChanged.next(false);
-      console.log("Token expired");
+      console.log('Token expired');
     });
   }
 
@@ -76,14 +77,11 @@ export class AuthService {
   // }
 
   public getAccessToken() {
-    if (!!this._user && this._user.expires_at < Date.now()){
+    if (!!this._user && this._user.expires_at < Date.now()) {
       return this._user.access_token;
-    }
-    else{
-      console.log("Token Expired");
+    } else {
+      console.log('Token Expired');
       return null;
     }
   }
-
-
 }

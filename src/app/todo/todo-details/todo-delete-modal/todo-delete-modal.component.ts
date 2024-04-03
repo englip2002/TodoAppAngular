@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class TodoDeleteModalComponent {
   @Input() todoTask: TodoTask;
+  
   constructor(
     private todoTaskService: TodoTaskService,
     private router: Router,
